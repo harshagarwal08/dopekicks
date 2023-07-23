@@ -15,15 +15,13 @@ const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const controlNavbar = () => {
-    if(window.scrollY > 200){
-      if(window.scrollY > lastScrollY && !mobileMenu){
+    if (window.scrollY > 200) {
+      if (window.scrollY > lastScrollY && !mobileMenu) {
         setShow("-translate-y-[80px]");
-      }
-      else{
+      } else {
         setShow("shadow-sm");
       }
-    }
-    else{
+    } else {
       setShow("translate-y-0");
     }
     setLastScrollY(window.scrollY);
@@ -42,7 +40,7 @@ const Header = () => {
     >
       <Wrapper className="h-[60px] flex justify-between items-center">
         <Link href="/">
-          <img src="/logo.svg" alt="" className="w-[120px] md:w-[100px]" />
+          <img src="/logo.svg" alt="" className="w-[140px] md:w-[120px]" />
         </Link>
         <Menu showCatMenu={showCatMenu} setShowCatMenu={setShowCatMenu} />
         {mobileMenu && (
@@ -59,12 +57,14 @@ const Header = () => {
               50
             </div>
           </div>
-          <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
-            <BsCart className="text-[15px] md:text-[20px]" />
-            <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-              4
+          <Link href="/cart">
+            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
+              <BsCart className="text-[15px] md:text-[20px]" />
+              <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
+                4
+              </div>
             </div>
-          </div>
+          </Link>
           <div className="w-8 md:w-12 h-8 md:h-12 md:hidden rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative -mr-2">
             {mobileMenu ? (
               <VscChromeClose
