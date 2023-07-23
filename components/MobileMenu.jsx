@@ -16,7 +16,7 @@ const subMenuData = [
   { id: 4, name: "Football shoes", doc_count: 107 },
 ];
 
-const MobileMenu = ({ showCatMenu, setShowCatMenu, setMobileMenu }) => {
+const MobileMenu = ({ showCatMenu, setShowCatMenu, setMobileMenu, categories}) => {
   return (
     <ul className="flex flex-col md:hidden font-bold absolute top-[50px] left-0 w-full h-[calc(100vh-50px)] bg-white border-t text-black">
       {data.map((item) => {
@@ -24,7 +24,7 @@ const MobileMenu = ({ showCatMenu, setShowCatMenu, setMobileMenu }) => {
           <React.Fragment key={item.id}>
             {item?.subMenu ? (
               <li
-                className="flex cursor-pointer py-4 px-5 border-b flex-col relative gap-4"
+                className="flex cursor-pointer py-4 px-5 border-b flex-col relative"
                 onClick={() => setShowCatMenu(!showCatMenu)}
               >
                 <div className="flex justify-between items-center">
@@ -32,21 +32,22 @@ const MobileMenu = ({ showCatMenu, setShowCatMenu, setMobileMenu }) => {
                   <BsChevronDown size={14} />
                 </div>
                 {showCatMenu && (
-                  <ul className="bg-black/[0.05] -mx-5 mt-4-mb-4">
-                    {subMenuData.map((subitem) => {
+                  <ul className="bg-black/[0.05] -mx-5 mt-4 -mb-4">
+                    {categories.map(({attributes: c, id}) => {
                       return (
+                        c?.products.data.length > 0 &&
                         <Link
-                          href={`/category/${subitem?.name}`}
-                          key={subitem.id}
+                          href={`/category/${c?.slug}`}
+                          key={id}
                           onClick={() => {
                             setShowCatMenu(false);
                             setMobileMenu(false);
                           }}
                         >
                           <li className="py-4 px-8 border-t flex justify-between">
-                            {subitem?.name}
+                            {c?.name}
                             <span className="opacity-50 text-sm">
-                              ({subitem?.doc_count})
+                              ({c?.products.data.length})
                             </span>
                           </li>
                         </Link>

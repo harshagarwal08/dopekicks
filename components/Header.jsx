@@ -7,12 +7,23 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { BiMenuAltRight } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import MobileMenu from "./MobileMenu";
+import { fetchData } from "@/utils/api";
 
 const Header = () => {
+  const [categories, setCategories] = useState(null);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [show, setShow] = useState("translate-y-0");
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    const {data} = await fetchData("/api/categories?populate=*");
+    setCategories(data);
+  };
 
   const controlNavbar = () => {
     if (window.scrollY > 200) {
@@ -42,12 +53,13 @@ const Header = () => {
         <Link href="/">
           <img src="/logo.svg" alt="" className="w-[140px] md:w-[120px]" />
         </Link>
-        <Menu showCatMenu={showCatMenu} setShowCatMenu={setShowCatMenu} />
+        <Menu showCatMenu={showCatMenu} setShowCatMenu={setShowCatMenu} categories={categories}/>
         {mobileMenu && (
           <MobileMenu
             showCatMenu={showCatMenu}
             setShowCatMenu={setShowCatMenu}
             setMobileMenu={setMobileMenu}
+            categories={categories}
           />
         )}
         <div className="flex items-center gap-2 text-black">
