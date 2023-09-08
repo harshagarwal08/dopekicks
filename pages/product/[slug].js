@@ -47,7 +47,7 @@ const ProductDetails = ({ relatedProducts, product }) => {
   const notifySuccess = (message, icon = "🎉") =>
     toast.success(message, {
       icon,
-      position: "top-right",
+      position: "bottom-right",
       autoClose: 1500,
       hideProgressBar: true,
       closeOnClick: true,
@@ -59,7 +59,7 @@ const ProductDetails = ({ relatedProducts, product }) => {
 
   const notifyError = (message) =>
     toast.error(message, {
-      position: "top-right",
+      position: "bottom-right",
       autoClose: 1500,
       hideProgressBar: true,
       closeOnClick: true,
@@ -72,10 +72,10 @@ const ProductDetails = ({ relatedProducts, product }) => {
   return (
     <div className="w-full md:py-20 py-10">
       <ToastContainer
-        position="top-right"
+        position="bottom-right"
         autoClose={1500}
         hideProgressBar
-        newestOnTop={false}
+        newestOnTop={true}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
@@ -215,8 +215,8 @@ const ProductDetails = ({ relatedProducts, product }) => {
 export default ProductDetails;
 
 export async function getStaticPaths() {
-  const { data } = await fetchData("/api/products?populate=*");
-  const paths = data?.map((product) => ({
+  const products = await fetchData("/api/products?populate=*");
+  const paths = products?.data?.map((product) => ({
     params: { slug: product?.attributes?.slug },
   }));
   return { paths, fallback: false };
