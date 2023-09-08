@@ -16,8 +16,8 @@ const ProductCard = ({ data: { attributes: p, id } }) => {
         alt={p?.name}
         className="w-full max-h-[300px] object-cover"
       />
-      <div className="p-4 text-black/[0.9]">
-        <h2 className="text-lg font-medium">{p?.name}</h2>
+      <div className="py-4 md:px-2 text-black/[0.9]">
+        <div className="text-lg font-medium">{p?.name}</div>
         <div className="flex items-center text-black/[0.5]">
           <p className="mr-2 text-lg font-semibold">&#8377;{p?.price}</p>
           {p?.original_price && (

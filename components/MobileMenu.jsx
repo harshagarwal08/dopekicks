@@ -33,7 +33,7 @@ const MobileMenu = ({ showCatMenu, setShowCatMenu, setMobileMenu, categories}) =
                 </div>
                 {showCatMenu && (
                   <ul className="bg-black/[0.05] -mx-5 mt-4 -mb-4">
-                    {categories.map(({attributes: c, id}) => {
+                    {categories?.map(({attributes: c, id}) => {
                       return (
                         c?.products.data.length > 0 &&
                         <Link

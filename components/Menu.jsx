@@ -29,7 +29,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories}) => {
                 <BsChevronDown size={14} />
                 {showCatMenu && (
                   <ul className="absolute top-6 left-0 bg-white w-full py-1 px-1 shadow-lg min-w-[250px] text-black">
-                    {categories.map(({attributes: c, id}) => {
+                    {categories?.map(({attributes: c, id}) => {
                       return (
                         c?.products.data.length > 0 &&
                         <Link href={`/category/${c?.slug}`} key={id} onClick={()=>setShowCatMenu(false)}>

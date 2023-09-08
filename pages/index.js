@@ -20,7 +20,6 @@ export default function Home({products}) {
           {products?.data?.map((product) => (
            <ProductCard key={product?.id} data={product} />
           ))}
-          
         </div>
       </Wrapper>
     </main>

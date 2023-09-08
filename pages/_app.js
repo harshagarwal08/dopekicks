@@ -1,7 +1,26 @@
-import Footer from '@/components/Footer'
-import Header from '@/components/Header'
-import '@/styles/globals.css'
-import Head from 'next/head'
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import store from "@/store/store";
+import "@/styles/globals.css";
+import Head from "next/head";
+import Router from "next/router";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+import { Provider } from "react-redux";
+
+NProgress.configure({ showSpinner: false });
+
+Router.events.on("routeChangeStart", () => {
+  NProgress.start();
+});
+
+Router.events.on("routeChangeComplete", () => {
+  NProgress.done();
+});
+
+Router.events.on("routeChangeError", () => {
+  NProgress.done();
+});
 
 export default function App({ Component, pageProps }) {
   return (
@@ -22,9 +41,11 @@ export default function App({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-      <Header />
-      <Component {...pageProps} />
-      <Footer />
+      <Provider store={store}>
+        <Header />
+        <Component {...pageProps} />
+        <Footer />
+      </Provider>
     </>
-  )
+  );
 }

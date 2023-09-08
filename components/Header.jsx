@@ -8,6 +8,7 @@ import { BiMenuAltRight } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import MobileMenu from "./MobileMenu";
 import { fetchData } from "@/utils/api";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [categories, setCategories] = useState(null);
@@ -15,13 +16,15 @@ const Header = () => {
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [show, setShow] = useState("translate-y-0");
   const [lastScrollY, setLastScrollY] = useState(0);
+  const { cartItems } = useSelector((state) => state.cart);
+  const { wishlistedItems } = useSelector((state) => state.wishlist);
 
   useEffect(() => {
     fetchCategories();
   }, []);
 
   const fetchCategories = async () => {
-    const {data} = await fetchData("/api/categories?populate=*");
+    const { data } = await fetchData("/api/categories?populate=*");
     setCategories(data);
   };
 
@@ -53,7 +56,11 @@ const Header = () => {
         <Link href="/">
           <img src="/logo.svg" alt="" className="w-[140px] md:w-[120px]" />
         </Link>
-        <Menu showCatMenu={showCatMenu} setShowCatMenu={setShowCatMenu} categories={categories}/>
+        <Menu
+          showCatMenu={showCatMenu}
+          setShowCatMenu={setShowCatMenu}
+          categories={categories}
+        />
         {mobileMenu && (
           <MobileMenu
             showCatMenu={showCatMenu}
@@ -64,18 +71,18 @@ const Header = () => {
         )}
         <div className="flex items-center gap-2 text-black">
           <Link href="/wishlist">
-          <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
-            <IoMdHeartEmpty className="text-[19px] md:text-[24px]" />
-            <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[6px]">
-              50
+            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center relative">
+              <IoMdHeartEmpty className="text-[19px] md:text-[24px]" />
+              <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[6px]">
+                {wishlistedItems?.length}
+              </div>
             </div>
-          </div>
           </Link>
           <Link href="/cart">
-            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
+            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center cursor-pointer relative">
               <BsCart className="text-[15px] md:text-[20px]" />
               <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                4
+                {cartItems?.length}
               </div>
             </div>
           </Link>
